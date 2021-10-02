@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,15 +78,6 @@ class _MyAppState extends State<MyApp> {
     await prefs.setStringList('offerTexts', newOfferTexts);
   }
 
-  Future<void> loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _persons = loadPersons(prefs);
-      _introduceTexts = loadIntroduceTexts(prefs);
-      _offerTexts = loadOfferTexts(prefs);
-    });
-  }
-
   List<Person> loadPersons(SharedPreferences prefs) {
     try {
       List<Person> result = [
@@ -105,9 +95,7 @@ class _MyAppState extends State<MyApp> {
       return prefs.getStringList('introduceTexts')!;
     } catch (e) {
       isFirstTimeLoaded = true;
-      return Platform.localeName.contains('ru')
-          ? INTRODUCE_TEXTS_RU
-          : INTRODUCE_TEXTS_EN;
+      return [];
     }
   }
 
@@ -115,9 +103,7 @@ class _MyAppState extends State<MyApp> {
     try {
       return prefs.getStringList('offerTexts')!;
     } catch (e) {
-      return Platform.localeName.contains('ru')
-          ? OFFER_TEXTS_RU
-          : OFFER_TEXTS_EN;
+      return [];
     }
   }
 
@@ -136,6 +122,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    if (isFirstTimeLoaded) {
+      if (context.locale.languageCode.contains('ru')) {
+        _introduceTexts = INTRODUCE_TEXTS_RU;
+        _offerTexts = OFFER_TEXTS_RU;
+      } else {
+        _introduceTexts = INTRODUCE_TEXTS_EN;
+        _offerTexts = OFFER_TEXTS_EN;
+      }
+    }
+
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

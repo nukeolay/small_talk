@@ -7,8 +7,8 @@ You met a stranger in the subway, cafe, bus, club and you like her/him? Just typ
 The person you show the screen can type her/his phone number or social media account name, so you can continue your conversation and go out for a date.
 
 Can be installed to mobile device via:
-- [Google Play](https://play.google.com/store/apps/details?id=com.qumyz.hi_dating_app)
-- [Progressive Web App](https://nukeolay.github.io/hi/)
+- [Google Play](https://play.google.com/store/apps/details?id=com.qumyz.small_talk)
+- [Progressive Web App](https://nukeolay.github.io/smalltalk/)
 
 CONTACTS:
 qumyzapps@gmail.com

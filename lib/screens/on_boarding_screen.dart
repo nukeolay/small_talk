@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -96,7 +97,7 @@ class _OnBoardingState extends State<OnBoardingScreen> {
         bottomSheet: Container(
           padding: EdgeInsets.symmetric(horizontal: 40.0),
           color: Theme.of(context).scaffoldBackgroundColor,
-          height: Platform.isIOS ? 70.0 : 60.0,
+          height: kIsWeb ? 70 : Platform.isIOS ? 70.0 : 60.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
