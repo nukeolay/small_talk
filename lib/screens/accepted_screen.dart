@@ -37,7 +37,7 @@ class _AcceptedScreenState extends State<AcceptedScreen> {
             children: [
               AnimatedOpacity(
                 opacity: _visible ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 3000),
+                duration: const Duration(milliseconds: 1000),
                 child: TextButton(
                   child: Text(
                     heartIcon,

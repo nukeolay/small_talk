@@ -120,6 +120,15 @@ class _MyAppState extends State<MyApp> {
     await setPersons(persons: _persons);
   }
 
+  Future<void> removePerson(String id) async {
+    setState(() {
+      int personIndex = _persons.indexWhere((person) => person.id == id);
+      _persons.removeAt(personIndex);
+      print('removed $id');
+    });
+    await setPersons(persons: _persons);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isFirstTimeLoaded) {
@@ -161,7 +170,8 @@ class _MyAppState extends State<MyApp> {
         '/get-contact-screen': (BuildContext ctx) =>
             GetContactScreen(addPerson),
         '/accepted-screen': (BuildContext ctx) => AcceptedScreen(),
-        '/persons-screen': (BuildContext ctx) => PersonsScreen(_persons),
+        '/persons-screen': (BuildContext ctx) =>
+            PersonsScreen(_persons, removePerson),
         '/on-boarding-screen': (BuildContext ctx) =>
             OnBoardingScreen(setIsFirstTime),
       },
