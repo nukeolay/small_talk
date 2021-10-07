@@ -36,7 +36,7 @@ class _PersonItemState extends State<PersonItem> {
             child: const Icon(
               Icons.delete,
               color: Colors.white,
-              size: 40,
+              size: 24,
             ),
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.only(right: 20),
@@ -54,25 +54,6 @@ class _PersonItemState extends State<PersonItem> {
               borderRadius: BorderRadius.circular(15),
             ),
             tileColor: Theme.of(context).cardColor,
-            onTap: () {
-              Clipboard.setData(
-                ClipboardData(text: widget.contact),
-              );
-              final snackBar = SnackBar(
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Theme.of(context).primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                content: Text(
-                  'contactCopied'.tr(),
-                  style: TextStyle(
-                    color: Theme.of(context).hintColor,
-                  ),
-                ),
-              );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            },
             leading: Icon(
               Icons.favorite,
               size: 50,
@@ -80,7 +61,28 @@ class _PersonItemState extends State<PersonItem> {
             ),
             title: Text(widget.contact),
             subtitle: Text(widget.name),
-            trailing: Icon(Icons.copy),
+            trailing: IconButton(
+              icon: Icon(Icons.copy),
+              onPressed: () {
+                Clipboard.setData(
+                  ClipboardData(text: widget.contact),
+                );
+                final snackBar = SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  content: Text(
+                    'contactCopied'.tr(),
+                    style: TextStyle(
+                      color: Theme.of(context).hintColor,
+                    ),
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+            ),
           ),
         ),
       ),
