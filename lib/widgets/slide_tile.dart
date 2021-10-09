@@ -34,7 +34,11 @@ class SlideTile extends StatelessWidget {
             margin: EdgeInsets.only(
               left: height * 0.015,
               right: height * 0.015,
-              bottom: kIsWeb ? 70 : Platform.isIOS ? 70.0 : 60.0,
+              bottom: kIsWeb
+                  ? 70
+                  : Platform.isIOS
+                      ? 70.0
+                      : 60.0,
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
@@ -43,26 +47,31 @@ class SlideTile extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(
                   vertical: height * 0.035, horizontal: height * 0.035),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  SingleChildScrollView(
-                    child: Text(instruction,
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.7),
-                          fontSize: 24,//height * 0.025
-                        )),
-                  ),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      title,
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      instruction,
+                      style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .color!
+                            .withOpacity(0.7),
+                        fontSize: 22, //height * 0.025
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
