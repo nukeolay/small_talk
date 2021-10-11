@@ -1,6 +1,6 @@
 # Privacy Policy #
 
-"Small Talk - Dating" was built as a Free app. This service is provided by at no cost and is intended for use as is.
+"Small Talk - Pickup easier" was built as a Free app. This service is provided by at no cost and is intended for use as is.
 
 We do not ask for your email address, phone number or any information about you.
 We do not sell content.
