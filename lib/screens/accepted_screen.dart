@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:lottie/lottie.dart';
 
 class AcceptedScreen extends StatefulWidget {
@@ -40,24 +41,38 @@ class _AcceptedScreenState extends State<AcceptedScreen>
                 height: width * 0.9,
                 child: InkWell(
                   child: isSuccess
-                      ? Lottie.asset(
-                          'assets/animations/success.json',
-                          repeat: false,
-                          controller: _controller,
-                          onLoaded: (composition) {
-                            _controller.duration = Duration(seconds: 2);
-                            _controller.forward();
-                          },
-                        )
-                      : Lottie.asset(
-                          'assets/animations/not_success.json',
-                          repeat: false,
-                          controller: _controller,
-                          onLoaded: (composition) {
-                            _controller.duration = Duration(seconds: 2);
-                            _controller.forward();
-                          },
-                        ),
+                      ? kIsWeb
+                          ? Center(
+                              child: Text(
+                                '💖',
+                                style: TextStyle(fontSize: 90),
+                              ),
+                            )
+                          : Lottie.asset(
+                              'assets/animations/success.json',
+                              repeat: false,
+                              controller: _controller,
+                              onLoaded: (composition) {
+                                _controller.duration = Duration(seconds: 2);
+                                _controller.forward();
+                              },
+                            )
+                      : kIsWeb
+                          ? Center(
+                              child: Text(
+                                '💔',
+                                style: TextStyle(fontSize: 90),
+                              ),
+                            )
+                          : Lottie.asset(
+                              'assets/animations/not_success.json',
+                              repeat: false,
+                              controller: _controller,
+                              onLoaded: (composition) {
+                                _controller.duration = Duration(seconds: 2);
+                                _controller.forward();
+                              },
+                            ),
                   onTap: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         '/', (Route<dynamic> route) => false);
