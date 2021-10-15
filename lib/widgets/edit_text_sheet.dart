@@ -36,6 +36,12 @@ class _EditTextSheetState extends State<EditTextSheet> {
   }
 
   @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(boxShadow: [

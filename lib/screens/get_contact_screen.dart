@@ -23,6 +23,12 @@ class _GetContactScreenState extends State<GetContactScreen> {
   late Function buttonTypeFunc;
   late Function changed;
 
+  @override
+  void dispose() {
+    editingController.dispose();
+    super.dispose();
+  }
+
   Widget contactInputWidget(
     String hintText,
     TextEditingController textEditingController,
@@ -115,10 +121,7 @@ class _GetContactScreenState extends State<GetContactScreen> {
   void notInterested() {
     Navigator.of(context).popAndPushNamed(
       '/accepted-screen',
-      arguments: [
-        '💔',
-        Theme.of(context).primaryColor,
-      ],
+      arguments: false, //💔
     );
   }
 
@@ -130,10 +133,7 @@ class _GetContactScreenState extends State<GetContactScreen> {
       }
       Navigator.of(context).popAndPushNamed(
         '/accepted-screen',
-        arguments: [
-          '💖',
-          Colors.red,
-        ],
+        arguments: true, //💖
       );
     });
   }
