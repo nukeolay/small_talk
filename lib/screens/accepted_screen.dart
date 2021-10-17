@@ -12,10 +12,12 @@ class AcceptedScreen extends StatefulWidget {
 class _AcceptedScreenState extends State<AcceptedScreen>
     with TickerProviderStateMixin {
   late final AnimationController _controller;
+  bool _visible = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _runAnimation());
 
     _controller = AnimationController(vsync: this);
   }
@@ -24,6 +26,12 @@ class _AcceptedScreenState extends State<AcceptedScreen>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void _runAnimation() {
+    setState(() {
+      _visible = true;
+    });
   }
 
   @override
@@ -43,9 +51,13 @@ class _AcceptedScreenState extends State<AcceptedScreen>
                   child: isSuccess
                       ? kIsWeb
                           ? Center(
-                              child: Text(
-                                '💖',
-                                style: TextStyle(fontSize: 90),
+                              child: AnimatedOpacity(
+                                opacity: _visible ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 3000),
+                                child: Text(
+                                  '💖',
+                                  style: TextStyle(fontSize: 100),
+                                ),
                               ),
                             )
                           : Lottie.asset(
@@ -59,9 +71,13 @@ class _AcceptedScreenState extends State<AcceptedScreen>
                             )
                       : kIsWeb
                           ? Center(
-                              child: Text(
-                                '💔',
-                                style: TextStyle(fontSize: 90),
+                              child: AnimatedOpacity(
+                                opacity: _visible ? 1.0 : 0.0,
+                                duration: const Duration(milliseconds: 3000),
+                                child: Text(
+                                  '💔',
+                                  style: TextStyle(fontSize: 100),
+                                ),
                               ),
                             )
                           : Lottie.asset(
