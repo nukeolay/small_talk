@@ -33,11 +33,18 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
     super.initState();
   }
 
-  PageController pageControllerIntroduce = PageController(
+  @override
+  void dispose() {
+    _pageControllerIntroduce.dispose();
+    _pageControllerOffer.dispose();
+    super.dispose();
+  }
+
+  PageController _pageControllerIntroduce = PageController(
     viewportFraction: 0.85,
     initialPage: 1,
   );
-  PageController pageControllerOffer = PageController(
+  PageController _pageControllerOffer = PageController(
     viewportFraction: 0.85,
     initialPage: 1,
   );
@@ -49,7 +56,7 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
     _updateTexts(
       texts,
       widget._setIntroduceTexts,
-      pageControllerIntroduce,
+      _pageControllerIntroduce,
       needToMoveCarousel,
     );
   }
@@ -61,7 +68,7 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
     _updateTexts(
       texts,
       widget._setOfferTexts,
-      pageControllerOffer,
+      _pageControllerOffer,
       needToMoveCarousel,
     );
   }
@@ -85,12 +92,12 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
 
   void randomizePages() {
     setState(() {
-      pageControllerIntroduce.animateToPage(
+      _pageControllerIntroduce.animateToPage(
         1 + Random().nextInt(introduceTexts.length),
         duration: Duration(milliseconds: 200),
         curve: Curves.bounceIn,
       );
-      pageControllerOffer.animateToPage(
+      _pageControllerOffer.animateToPage(
         1 + Random().nextInt(offerTexts.length),
         duration: Duration(milliseconds: 200),
         curve: Curves.bounceIn,
@@ -120,7 +127,7 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
                 context,
                 introduceTexts,
                 _updateIntroduceTexts,
-                pageControllerIntroduce,
+                _pageControllerIntroduce,
               ),
             ),
             Container(
@@ -139,7 +146,7 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
                 context,
                 offerTexts,
                 _updateOfferTexts,
-                pageControllerOffer,
+                _pageControllerOffer,
               ),
             ),
             Row(
@@ -157,20 +164,20 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
                 ActionButton(
                   'buttonStart'.tr(),
                   () {
-                    if (pageControllerIntroduce.page!.toInt() == 0 ||
-                        pageControllerOffer.page!.toInt() == 0) {
-                      if (pageControllerIntroduce.page!.toInt() == 0) {
+                    if (_pageControllerIntroduce.page!.toInt() == 0 ||
+                        _pageControllerOffer.page!.toInt() == 0) {
+                      if (_pageControllerIntroduce.page!.toInt() == 0) {
                         setState(() {
-                          pageControllerIntroduce.animateToPage(
+                          _pageControllerIntroduce.animateToPage(
                             1,
                             duration: Duration(milliseconds: 200),
                             curve: Curves.bounceIn,
                           );
                         });
                       }
-                      if (pageControllerOffer.page!.toInt() == 0) {
+                      if (_pageControllerOffer.page!.toInt() == 0) {
                         setState(() {
-                          pageControllerOffer.animateToPage(
+                          _pageControllerOffer.animateToPage(
                             1,
                             duration: Duration(milliseconds: 200),
                             curve: Curves.bounceIn,
@@ -181,8 +188,8 @@ class _IntroduceScreenState extends State<IntroduceScreen> {
                       Navigator.of(context)
                           .pushNamed('/get-contact-screen', arguments: <String>[
                         introduceTexts[
-                            pageControllerIntroduce.page!.toInt() - 1],
-                        offerTexts[pageControllerOffer.page!.toInt() - 1],
+                            _pageControllerIntroduce.page!.toInt() - 1],
+                        offerTexts[_pageControllerOffer.page!.toInt() - 1],
                       ]);
                     }
                   },
