@@ -124,7 +124,6 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       int personIndex = _persons.indexWhere((person) => person.id == id);
       _persons.removeAt(personIndex);
-      print('removed $id');
     });
     await setPersons(persons: _persons);
   }

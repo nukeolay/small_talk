@@ -1,5 +1,6 @@
 {
-    "hintInputContact": "Type your number or other contact",
+    "hintInputPhoneNumber": "Type your phone number",
+    "hintInputAccountName": "Type your account name",
     "unknownName": "Unknown name",
     "hintInputName": "What`s your name?",
     "addNewIntroduce": "Tap to add new",

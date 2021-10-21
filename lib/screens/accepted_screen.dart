@@ -65,7 +65,7 @@ class _AcceptedScreenState extends State<AcceptedScreen>
                               repeat: false,
                               controller: _controller,
                               onLoaded: (composition) {
-                                _controller.duration = Duration(seconds: 2);
+                                _controller.duration = Duration(seconds: 1);
                                 _controller.forward();
                               },
                             )
@@ -85,7 +85,7 @@ class _AcceptedScreenState extends State<AcceptedScreen>
                               repeat: false,
                               controller: _controller,
                               onLoaded: (composition) {
-                                _controller.duration = Duration(seconds: 2);
+                                _controller.duration = Duration(seconds: 1);
                                 _controller.forward();
                               },
                             ),

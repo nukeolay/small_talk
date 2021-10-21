@@ -1,5 +1,6 @@
 {
-    "hintInputContact": "Напиши, как с тобой связаться",
+    "hintInputPhoneNumber": "Напиши твой номер",
+    "hintInputAccountName": "Напиши твой аккаунт",
     "unknownName": "Имя не указано",
     "hintInputName": "Как тебя зовут?",
     "addNewIntroduce": "Нажми чтобы добавить фразу",

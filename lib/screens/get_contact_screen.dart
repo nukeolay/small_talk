@@ -5,114 +5,100 @@ import 'package:flutter/material.dart';
 import '../CONSTS.dart';
 import '../models/person.dart';
 import '../widgets/get_contact_button.dart';
+import '../widgets/custom_input_field.dart';
+import '../widgets/toggle_input_type_buttons.dart';
 
 class GetContactScreen extends StatefulWidget {
   final Function addPerson;
 
-  const GetContactScreen(this.addPerson);
+  GetContactScreen(this.addPerson);
 
   @override
   _GetContactScreenState createState() => _GetContactScreenState();
 }
 
 class _GetContactScreenState extends State<GetContactScreen> {
-  late TextEditingController editingController;
-  late Person newPerson;
-  late String hintText;
-  late Enum buttonType;
-  late Function buttonTypeFunc;
-  late Function changed;
+  late TextEditingController _editingController;
+  late Person _newPerson;
+  late String _hintText;
+  late Enum _buttonType;
+  late Function _buttonTypeFunc;
+  late Widget? _suffix;
+  late TextInputType _textInputType;
+  late FocusNode _myFocusNode;
 
   @override
   void dispose() {
-    editingController.dispose();
+    _editingController.dispose();
+    _myFocusNode.dispose();
     super.dispose();
-  }
-
-  Widget contactInputWidget(
-    String hintText,
-    TextEditingController textEditingController,
-    Function done,
-    Function changed,
-  ) {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-      decoration: BoxDecoration(
-        color: Theme.of(context).hintColor,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: TextField(
-        controller: textEditingController,
-        autofocus: false,
-        enableSuggestions: true,
-        autocorrect: false,
-        textInputAction: TextInputAction.go,
-        keyboardType: TextInputType.text,
-        textAlignVertical: TextAlignVertical.center,
-        textAlign: TextAlign.center,
-        onSubmitted: (_) => done(),
-        onChanged: (_) => changed(),
-        style: TextStyle(
-          fontSize: 20,
-          color: Theme.of(context).scaffoldBackgroundColor,
-        ),
-        decoration: InputDecoration(
-          fillColor: Theme.of(context).hintColor,
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          isCollapsed: true,
-          contentPadding: EdgeInsets.all(4),
-          hintStyle: TextStyle(
-              fontSize: 20, color: Theme.of(context).scaffoldBackgroundColor),
-          counterStyle: TextStyle(fontSize: 20),
-          hintText: hintText,
-        ),
-      ),
-    );
   }
 
   @override
   void initState() {
-    editingController = TextEditingController();
-    buttonTypeFunc = notInterested;
-    hintText = 'hintInputContact'.tr();
-    buttonType = ButtonType.notInterested;
+    _editingController = TextEditingController();
+    _buttonTypeFunc = notInterested;
+    _hintText = 'hintInputPhoneNumber'.tr();
+    _buttonType = ButtonType.notInterested;
+    _suffix = ToggleInputTypeButtons(toggleContactInputType);
+    _textInputType = TextInputType.phone;
+    _myFocusNode = FocusNode();
     super.initState();
   }
 
-  void saveContact() {
+  void toggleContactInputType() async {
+    _hintText == 'hintInputPhoneNumber'.tr()
+        ? _hintText = 'hintInputAccountName'.tr()
+        : _hintText = 'hintInputPhoneNumber'.tr();
     setState(() {
-      newPerson = new Person(
+      FocusManager.instance.primaryFocus!.unfocus();
+      _textInputType == TextInputType.phone
+          ? _textInputType = TextInputType.text
+          : _textInputType = TextInputType.phone;
+    });
+    await Future.delayed(Duration(milliseconds: 100), () {});
+    setState(() {
+      _myFocusNode.requestFocus();
+    });
+  }
+
+  void saveContact() async {
+    setState(() {
+      _newPerson = new Person(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           name: 'unknownName'.tr(),
-          contact: editingController.value.text,
+          contact: _editingController.value.text,
           color: COLORS[Random().nextInt(COLORS.length - 1)]);
-      widget.addPerson(newPerson);
-      hintText = 'hintInputName'.tr();
-      buttonType = ButtonType.saveName;
-      buttonTypeFunc = saveName;
-      editingController.clear();
+      widget.addPerson(_newPerson);
+      _hintText = 'hintInputName'.tr();
+      _buttonType = ButtonType.saveName;
+      _suffix = null;
+      _buttonTypeFunc = saveName;
+      _editingController.clear();
+      if (_textInputType == TextInputType.phone) {
+        FocusManager.instance.primaryFocus!.unfocus();
+        _textInputType = TextInputType.text;
+      }
+    });
+    await Future.delayed(Duration(milliseconds: 100), () {});
+    setState(() {
+      _myFocusNode.requestFocus();
     });
   }
 
   void changedContact() {
     setState(() {
-      if (buttonType != ButtonType.saveName) {
+      if (_buttonType != ButtonType.saveName) {
         setState(() {
-          buttonType = ButtonType.saveContact;
-          buttonTypeFunc = saveContact;
+          _buttonType = ButtonType.saveContact;
+          _buttonTypeFunc = saveContact;
         });
       }
-      if (editingController.value.text == '' &&
-          buttonType == ButtonType.saveContact) {
+      if (_editingController.value.text == '' &&
+          _buttonType == ButtonType.saveContact) {
         setState(() {
-          buttonType = ButtonType.notInterested;
-          buttonTypeFunc = notInterested;
+          _buttonType = ButtonType.notInterested;
+          _buttonTypeFunc = notInterested;
         });
       }
     });
@@ -127,9 +113,9 @@ class _GetContactScreenState extends State<GetContactScreen> {
 
   void saveName() {
     setState(() {
-      if (editingController.value.text != '') {
-        newPerson.name = editingController.value.text;
-        widget.addPerson(newPerson);
+      if (_editingController.value.text != '') {
+        _newPerson.name = _editingController.value.text;
+        widget.addPerson(_newPerson);
       }
       Navigator.of(context).popAndPushNamed(
         '/accepted-screen',
@@ -168,18 +154,21 @@ class _GetContactScreenState extends State<GetContactScreen> {
                     ),
                     Column(
                       children: [
-                        contactInputWidget(
-                          hintText,
-                          editingController,
-                          buttonTypeFunc,
-                          changedContact,
+                        CustomInputField(
+                          suffix: _suffix,
+                          hintText: _hintText,
+                          textEditingController: _editingController,
+                          done: _buttonTypeFunc,
+                          changed: changedContact,
+                          textInputType: _textInputType,
+                          myFocusNode: _myFocusNode,
                         ),
                         Padding(
                           padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).viewInsets.bottom),
                           child: GetContactButton(
-                            buttonType: buttonType,
-                            buttonTypeFunc: buttonTypeFunc,
+                            buttonType: _buttonType,
+                            buttonTypeFunc: _buttonTypeFunc,
                           ),
                         ),
                       ],
