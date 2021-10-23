@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PersonItem extends StatefulWidget {
   const PersonItem({
@@ -25,6 +26,10 @@ class PersonItem extends StatefulWidget {
 class _PersonItemState extends State<PersonItem> {
   @override
   Widget build(BuildContext context) {
+    String _phoneNumber =
+        widget.contact.replaceAll(RegExp('^[{{L}}{0-9}]'), '');
+    bool _isPhoneNumber = int.tryParse(_phoneNumber) != null;
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: ClipRRect(
@@ -61,31 +66,67 @@ class _PersonItemState extends State<PersonItem> {
             ),
             title: Text(widget.contact),
             subtitle: Text(widget.name),
-            trailing: IconButton(
-              icon: Icon(Icons.copy),
-              onPressed: () {
-                Clipboard.setData(
-                  ClipboardData(text: widget.contact),
-                );
-                final snackBar = SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  backgroundColor: Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  content: Text(
-                    'contactCopied'.tr(),
-                    style: TextStyle(
-                      color: Theme.of(context).hintColor,
-                    ),
-                  ),
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              },
-            ),
+            trailing: _isPhoneNumber
+                ? CallContactButton(phoneNumber: _phoneNumber)
+                : CopyContactButton(widget: widget),
           ),
         ),
       ),
+    );
+  }
+}
+
+class CopyContactButton extends StatelessWidget {
+  const CopyContactButton({
+    Key? key,
+    required this.widget,
+  }) : super(key: key);
+
+  final PersonItem widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.copy),
+      onPressed: () {
+        Clipboard.setData(
+          ClipboardData(text: widget.contact),
+        );
+        final snackBar = SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          content: Text(
+            'contactCopied'.tr(),
+            style: TextStyle(
+              color: Theme.of(context).hintColor,
+            ),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
+    );
+  }
+}
+
+class CallContactButton extends StatelessWidget {
+  const CallContactButton({
+    Key? key,
+    required this.phoneNumber,
+  }) : super(key: key);
+
+  final String phoneNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.call),
+      onPressed: () {
+        launch('tel:$phoneNumber');
+        print('--------$phoneNumber');
+      },
     );
   }
 }
