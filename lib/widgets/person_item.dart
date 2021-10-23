@@ -26,9 +26,8 @@ class PersonItem extends StatefulWidget {
 class _PersonItemState extends State<PersonItem> {
   @override
   Widget build(BuildContext context) {
-    String _phoneNumber =
-        widget.contact.replaceAll(RegExp('^[{{L}}{0-9}]'), '');
-    bool _isPhoneNumber = int.tryParse(_phoneNumber) != null;
+    final phoneValidation = RegExp(r'^(?:[+0][1-9])?[0-9]{6,14}$');
+    final bool _isPhoneNumber = phoneValidation.hasMatch(widget.contact);
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -67,7 +66,7 @@ class _PersonItemState extends State<PersonItem> {
             title: Text(widget.contact),
             subtitle: Text(widget.name),
             trailing: _isPhoneNumber
-                ? CallContactButton(phoneNumber: _phoneNumber)
+                ? CallContactButton(phoneNumber: widget.contact)
                 : CopyContactButton(widget: widget),
           ),
         ),
@@ -125,7 +124,6 @@ class CallContactButton extends StatelessWidget {
       icon: Icon(Icons.call),
       onPressed: () {
         launch('tel:$phoneNumber');
-        print('--------$phoneNumber');
       },
     );
   }
