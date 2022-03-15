@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -43,64 +41,7 @@ class CarouselItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child:
-
-          // GestureDetector(
-          //   onTap: () => showCustomBottomModalSheet(
-          //     _textNum,
-          //     _texts,
-          //     _updateTexts,
-          //   ),
-          //   child: Container(
-          //     decoration: BoxDecoration(boxShadow: [
-          //       BoxShadow(
-          //         blurRadius: 16,
-          //         spreadRadius: 16,
-          //         color: Colors.black.withOpacity(0.1),
-          //       )
-          //     ]),
-          //     child: ClipRRect(
-          //       borderRadius: BorderRadius.circular(16.0),
-          //       child: BackdropFilter(
-          //           filter: ImageFilter.blur(
-          //             sigmaX: 20.0,
-          //             sigmaY: 20.0,
-          //           ),
-          //           child: Container(
-          //               width: 360,
-          //               height: 200,
-          //               decoration: BoxDecoration(
-          //                   color: _textNum == 0
-          //                       ? Theme.of(context).primaryColor.withOpacity(0.2)
-          //                       : Theme.of(context).cardColor.withOpacity(0.2),
-          //                   borderRadius: BorderRadius.circular(16.0),
-          //                   border: Border.all(
-          //                     width: 1.5,
-          //                     color: Colors.white.withOpacity(0.2),
-          //                   )),
-          //               child: Padding(
-          //                 padding: EdgeInsets.all(16.0),
-          //                 child: Center(
-          //                   child: Text(
-          //                       _textNum == 0
-          //                           ? 'addNewIntroduce'.tr()
-          //                           : _texts[_textNum - 1],
-          //                       textAlign: _textNum == 0
-          //                           ? TextAlign.center
-          //                           : TextAlign.start,
-          //                       style: TextStyle(
-          //                         fontSize: 30,
-          //                         color: Colors.white.withOpacity(0.75),
-          //                       ),
-          //                       softWrap: true,
-          //                       overflow: TextOverflow.fade),
-          //                 ),
-          //               ))
-          //           ),
-          //     ),
-          //   ),
-          // ),
-          InkWell(
+      child: InkWell(
         onTap: () => showCustomBottomModalSheet(
           _textNum,
           _texts,
