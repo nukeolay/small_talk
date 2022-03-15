@@ -1,9 +1,6 @@
-# small_talk
+# Small Talk - Pickup easier
 
-"Small Talk - Pickup easier" mobile application made with Flutter framework.
-
-DESCRIPTION:
-Sometimes you see a stranger and want to get to know him, but it's too noisy around, or you don't have the courage to come up and speak?
+Simple dating mobile app created with Flutter framework for those pepole who want to talk to nice person, but don't have enought courage to do it, or don't have phisycal capability to speak, e.i. deafs or dumbs. 
 Don't worry and use this app! All you have to do is:
 - type your name;
 - write an interesting offer, or choose existing one and press "Start";
@@ -17,9 +14,13 @@ Features:
 - can help you if you are very shy to speak to person you like;
 - can be helpful if you or person you like is deaf.
 
-Can be installed to mobile device via:
-- [Google Play](https://play.google.com/store/apps/details?id=com.qumyz.small_talk)
-- [Progressive Web App](https://nukeolay.github.io/smalltalk/)
+## Technologies:
 
-CONTACTS:
-qumyzapps@gmail.com
+- Dart
+- Flutter
+
+## Try it here:
+
+- <a href="https://apps.apple.com/us/app/small-talk-pickup-easier/id1589417543">App Store</a>
+- <a href="https://play.google.com/store/apps/details?id=com.qumyz.small_talk">Google Play</a>
+- <a href="https://nukeolay.github.io/smalltalk/">Progressive Web App</a>
