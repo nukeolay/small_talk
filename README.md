@@ -1,7 +1,6 @@
 # Small Talk - Pickup easier
 
-Simple dating mobile app created with Flutter framework for those pepole who want to talk to nice person, but don't have enought courage to do it, or don't have phisycal capability to speak, e.i. deafs or dumbs. 
-Don't worry and use this app! All you have to do is:
+Simple dating mobile app created with Flutter framework for those people who want to talk to nice person, but don't have enough courage to do it, or don't have physical capability to speak, e.i. deafs or dumbs. Don't worry and use this app! All you have to do is:
 - type your name;
 - write an interesting offer, or choose existing one and press "Start";
 - show you phone screen to the person you like;
